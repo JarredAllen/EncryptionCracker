@@ -50,3 +50,6 @@ Temporary Items
 /__pycache__
 /.project
 /.pydevproject
+
+#Temporary location that should not house anything in a release, but may house files as part of a test of some functionality.
+/temp
