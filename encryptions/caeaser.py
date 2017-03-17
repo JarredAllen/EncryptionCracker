@@ -5,11 +5,11 @@ Created on Mar 14, 2017
 '''
 from encryptions.base_class import base_class
 
-class caeasar(base_class):
-    '''A class that handles encrypting, decrypting, and cracking caeasar ciphers.'''
+class caesar(base_class):
+    '''A class that handles encrypting, decrypting, and cracking caesar ciphers.'''
 
     def __init__(self, dictionary):
-        super(caeasar, self).__init__(dictionary)
+        super(caesar, self).__init__(dictionary)
     
     def crack(self, message):
         legitimacy=-99999999

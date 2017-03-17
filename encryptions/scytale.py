@@ -5,24 +5,30 @@ Created on Mar 14, 2017
 '''
 from encryptions.base_class import base_class
 
+from math import ceil
+
 class scytale(base_class):
-    '''
-    classdocs
-    '''
+    '''A class that handles encrypting, decrypting, and cracking scytale ciphers'''
 
 
     def __init__(self, dictionary):
         '''
-        Constructor
+        Creates a new scytale object
+        
+        The one argument is the dictionary that it needs to use
         '''
         super(scytale, self).__init__(dictionary)
     
     def decrypt(self, message, length):
-        width=len(message)//length
+        chunks=[]
+        for i in range(0, len(message),length):
+            chunks.append(message[i:i+length])
         decrypt=''
-        for i in range(width):
-            decrypt+=message[i::width]
-            return decrypt
+        #print(chunks)
+        for i in range(length):
+            for chunk in chunks:
+                decrypt+=chunk[i]
+        return decrypt
 
     def crack(self, message):
         legitimacy=-99999999
@@ -35,3 +41,21 @@ class scytale(base_class):
                 decrypt=possible
                 mode=i
         return (decrypt, mode, legitimacy)
+    
+    def encrypt(self, message, length):
+        padding=(length-len(message)%length)%length
+        message+='_'*(padding)
+        encrypt=''
+        for i in range(length+1):
+            encrypt+=message[i::length+1]
+        return encrypt
+
+message='iamverybadlyhurthelp'
+scy=scytale(None)
+print(scy.decrypt(scy.encrypt(message, 5),5))
+'''
+for length in range(1,len(message)):
+    if message != scy.decrypt(scy.encrypt(message, length), length).replace('_', ''):
+        print(length, scy.decrypt(scy.encrypt(message, length), length))
+print('Test done')
+'''
