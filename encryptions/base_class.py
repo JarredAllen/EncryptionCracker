@@ -3,6 +3,7 @@ Created on Mar 14, 2017
 
 @author: Jarred
 '''
+import re
 
 class base_class:
     '''
@@ -55,3 +56,34 @@ class base_class:
     def encrypt(self, message, *args):
         """Encrypt the message using the keys given in *args"""
         raise NotImplementedError
+    
+    #Here come utilities that don't actually try to decode a message, but may be useful for determining what cipher was used.
+    
+    def index_of_coincidence(self, message, length=None):
+        """
+        This method calculates the index of coincidence for the given string.
+        If the length is unspecified, then it defaults to checking it for the entire message, otherwise, it breaks the message into chunks and calculates it separately.
+        
+        Most useful for determining the length of the key in a Vigenere cipher.
+        """
+        message=re.sub('[^a-zA-Z]+', '', message)
+        #print(message)
+        if length is None:
+            length=1
+        cols=[]
+        for i in range(length):
+            cols.append(message[i::length])
+        #print(cols)
+        coin=0
+        for col in cols:
+            colcoin=0
+            for i in col:
+                colcoin+=col.count(i)-1
+            colcoin/=len(col)*(len(col)-1)
+            coin+=colcoin
+        coin/=len(cols)
+        return coin
+
+if __name__=='__main__':
+    b=base_class(None)
+    print(b.index_of_coincidence('I have a very secure message that you can not crack.'))

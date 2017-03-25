@@ -1,1 +1,1 @@
-__all__=['affine', 'caeaser', 'scytale']
+__all__=['affine', 'caeaser', 'scytale', 'dictionary']

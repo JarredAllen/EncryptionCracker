@@ -4,8 +4,7 @@ Created on Mar 14, 2017
 @author: Jarred
 '''
 from encryptions.base_class import base_class
-
-from math import ceil
+from encryptions.dictionary import dictionary
 
 class scytale(base_class):
     '''A class that handles encrypting, decrypting, and cracking scytale ciphers'''
@@ -28,6 +27,7 @@ class scytale(base_class):
         for i in range(length):
             for chunk in chunks:
                 decrypt+=chunk[i]
+        decrypt=decrypt.strip('_')
         return decrypt
 
     def crack(self, message):
@@ -35,7 +35,9 @@ class scytale(base_class):
         decrypt=''
         mode=0
         for i in range(1, len(message)):
-            possible=self.decrypt(message, i)
+            padding=(i-len(message)%i)%i
+            paddedMessage=message+'_'*(padding)
+            possible=self.decrypt(paddedMessage, i)
             if self.get_validity(possible)>legitimacy:
                 legitimacy=self.get_validity(possible)
                 decrypt=possible
@@ -46,16 +48,16 @@ class scytale(base_class):
         padding=(length-len(message)%length)%length
         message+='_'*(padding)
         encrypt=''
-        for i in range(length+1):
-            encrypt+=message[i::length+1]
+        for i in range(len(message)//length):
+            encrypt+=message[i::len(message)//length]
+            #print(message[i::len(message)//length],end=' ')
+        #print()
         return encrypt
 
-message='iamverybadlyhurthelp'
-scy=scytale(None)
-print(scy.decrypt(scy.encrypt(message, 5),5))
-'''
-for length in range(1,len(message)):
-    if message != scy.decrypt(scy.encrypt(message, length), length).replace('_', ''):
-        print(length, scy.decrypt(scy.encrypt(message, length), length))
-print('Test done')
-'''
+if __name__=='__main__':
+    message='i am very badly hurt help insufferable cretin'
+    scy=scytale(dictionary())
+    for length in range(1,len(message)):
+        if message != scy.decrypt(scy.encrypt(message, length), length).replace('_', ''):
+            print(length, scy.decrypt(scy.encrypt(message, length), length))
+    print('Test done')

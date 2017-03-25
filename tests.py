@@ -4,7 +4,7 @@ Created on Mar 14, 2017
 @author: Jarred
 '''
 import unittest
-
+from encryptions import *
 
 class Test(unittest.TestCase):
 
