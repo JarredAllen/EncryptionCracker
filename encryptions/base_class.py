@@ -4,6 +4,7 @@ Created on Mar 14, 2017
 @author: Jarred
 '''
 import re
+from encryptions.dictionary import dictionary
 
 class base_class:
     '''
@@ -85,4 +86,5 @@ class base_class:
         return coin
 
 if __name__=='__main__':
-    b=base_class(None)
+    b=base_class(dictionary())
+    print(b.get_validity('inweaves nullity tscharik flyeater celestiality boastings tenebrosity duchan scattermouch gandermooner'))

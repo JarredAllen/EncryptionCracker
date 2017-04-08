@@ -4,6 +4,8 @@ The dictionary class, which handles verifying if something is a word, as well as
 @author: Jarred
 '''
 
+#from encryptions.base_class import base_class
+
 supported_languages=['english']
 
 class dictionary:
@@ -29,11 +31,12 @@ class dictionary:
         return binary_search(word, self.common_words)
     
     def get_score(self, word):
+        word=word.strip()
         if self.is_common_word(word):
             return 2.
         if self.is_word(word):
-            return 0.5
-        return 0.
+            return 1.
+        return -2
 
 list_of_english_words=[]
 with open('words.txt') as f:
@@ -62,7 +65,8 @@ def binary_search(term, sequence):
     return term==sequence[left]
 
 if __name__=='__main__':
-    print(dictionary().get_score('slsblakufarcemycefuraubcl lplel lteda eso a'))
+    english=dictionary()
+    print(english.get_score('g'))
 
 """
 t=['a', 'b', 'c', 'd', 'f']

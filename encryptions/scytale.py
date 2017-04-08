@@ -42,9 +42,9 @@ class scytale(base_class):
                 legitimacy=score
                 decrypt=possible
                 mode=i
-                if legitimacy>1.2:
+                #if legitimacy>1.2:
                     #note: This can cause failures if the key length is close to the actual 
-                    return (decrypt, mode, legitimacy)
+                    #return (decrypt, mode, legitimacy)
         return (decrypt, mode, legitimacy)
     
     def encrypt(self, message, length):
@@ -58,5 +58,4 @@ class scytale(base_class):
         return encrypt
 
 if __name__=='__main__':
-    scy=scytale(dictionary())
-    
+    pass    

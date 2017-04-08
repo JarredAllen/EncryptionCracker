@@ -41,20 +41,20 @@ class Test(unittest.TestCase):
             message=generator.__next__()
             key=randrange(2, 12)
             encrypted_text=cipher.encrypt(message, key)
-            res=cipher.decrypt(encrypted_text, key)
-            self.assertEqual(message, res[0], 'Modes: '+str(key)+' & '+str(res[1:])+' on trial number: '+str(i+1))
+            res=cipher.crack(encrypted_text)
+            self.assertEqual(message, res[0], 'Modes: '+str(key)+' & '+message+' became '+str(res)+'\n'+str(i))
 
-def generate_phrases(language='english', length=5):
+def generate_phrases(language='english', length=10):
     d=dictionary.dictionary(language)
-    yield 'the quick brown fox jumped over the lazy dog'
+    #yield 'the quick brown fox jumped over the lazy dog'
     while True:
         line=''
         for wordNumber in range(length):
-            if randrange(2)==1:
+            if randrange(3)==1:
                 line+=choice(d.words)+' '
             else:
                 line+=choice(d.words)+' '
-        yield line
+        yield line.strip()
 
 if __name__ == "__main__":
     #Next two lines can be used for testing the generator if changes are made
