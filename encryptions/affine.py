@@ -33,6 +33,8 @@ class affine(base_class):
                     legitimacy=self.get_validity(possible)
                     decrypt=possible
                     mode=(a,b)
+                    if legitimacy>=1:
+                        return (decrypt, mode[0], mode[1], legitimacy)
         return (decrypt, mode[0], mode[1], legitimacy)
 
     def decrypt(self, message, a, b):
@@ -61,4 +63,3 @@ class affine(base_class):
 
 ref=dictionary()
 aff=affine(ref)
-    

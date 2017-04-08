@@ -4,15 +4,16 @@ The dictionary class, which handles verifying if something is a word, as well as
 @author: Jarred
 '''
 
+supported_languages=['english']
+
 class dictionary:
-    def __init__(self, language='English'):
+    def __init__(self, language='english'):
         """
         Constructor for dictionary objects.
         
         Has one optional argument for the language that it is to decrypt in. If unspecified or left as None, it defaults to English.
-        Currently supported languages include: English 
         """
-        if language==None or language=='English':
+        if language==None or language.lower()=='english':
             self.words=list_of_english_words
             self.common_words=list_of_common_english_words
         else:
@@ -59,6 +60,9 @@ def binary_search(term, sequence):
         #print(sequence[index], left, right)
         index=(left+right)//2
     return term==sequence[left]
+
+if __name__=='__main__':
+    print(dictionary().get_score('slsblakufarcemycefuraubcl lplel lteda eso a'))
 
 """
 t=['a', 'b', 'c', 'd', 'f']

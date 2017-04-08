@@ -21,6 +21,8 @@ class caesar(base_class):
                 legitimacy=self.get_validity(possible)
                 decrypt=possible
                 mode=i
+                if legitimacy>=1:
+                    return (decrypt, mode, legitimacy)
         return (decrypt, mode, legitimacy)
 
     def decrypt(self, message, rot):

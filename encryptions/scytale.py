@@ -27,8 +27,7 @@ class scytale(base_class):
         for i in range(length):
             for chunk in chunks:
                 decrypt+=chunk[i]
-        decrypt=decrypt.strip('_')
-        return decrypt
+        return decrypt.replace('_', '')
 
     def crack(self, message):
         legitimacy=-99999999
@@ -38,10 +37,14 @@ class scytale(base_class):
             padding=(i-len(message)%i)%i
             paddedMessage=message+'_'*(padding)
             possible=self.decrypt(paddedMessage, i)
-            if self.get_validity(possible)>legitimacy:
-                legitimacy=self.get_validity(possible)
+            score=self.get_validity(possible)
+            if score>legitimacy:
+                legitimacy=score
                 decrypt=possible
                 mode=i
+                if legitimacy>1.2:
+                    #note: This can cause failures if the key length is close to the actual 
+                    return (decrypt, mode, legitimacy)
         return (decrypt, mode, legitimacy)
     
     def encrypt(self, message, length):
@@ -55,9 +58,5 @@ class scytale(base_class):
         return encrypt
 
 if __name__=='__main__':
-    message='i am very badly hurt help insufferable cretin'
     scy=scytale(dictionary())
-    for length in range(1,len(message)):
-        if message != scy.decrypt(scy.encrypt(message, length), length).replace('_', ''):
-            print(length, scy.decrypt(scy.encrypt(message, length), length))
-    print('Test done')
+    

@@ -86,4 +86,3 @@ class base_class:
 
 if __name__=='__main__':
     b=base_class(None)
-    print(b.index_of_coincidence('I have a very secure message that you can not crack.'))
