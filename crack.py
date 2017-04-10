@@ -25,6 +25,9 @@ def main():
             a=int(argv[4])
             b=int(argv[5])
             print(affine(None).encrypt(message, a, b))
+        elif cipher=='scytale':
+            key=int(argv[4])
+            print(scytale(None).encrypt(message, key))
         else:
             raise ValueError('Unsupported cipher: ' + cipher)
         
@@ -72,6 +75,21 @@ def main():
                     print(affine(dictionary(language)).crack(encrypted_text)[0])
             else:
                 print(affine(None).decrypt(encrypted_text, a, b))
+        elif cipher=='scytale':
+            key=None
+            if argv.count('-args')>0:
+                key=int(argv[argv.index('-args')+1])
+            if key is None:
+                if language is None:
+                    message=''
+                    legitimacy=-1
+                    for language in supported_languages:
+                        trial=scytale(dictionary(language)).crack(encrypted_text)
+                        if trial[-1]>legitimacy:
+                            message=trial[0]
+                    print(message)
+                else:
+                    print(scytale(dictionary(language)).crack(message))
         else:
             raise ValueError('Unsupported cipher: ' + cipher)
     else:
