@@ -20,9 +20,18 @@ class dictionary:
             self.common_words=list_of_common_english_words
         else:
             raise ValueError('Unrecognized or unsupported language')
+        self.reverse_words=words[::-1]
+        self.reverse_common_words=common_words[::-1]
     
-    def get_words(self):
+    def get_words(self, reverse=False):
+        if reverse:
+            return self.reverse_words
         return self.words
+    
+    def get_common_words(self, reverse=False):
+        if reverse:
+            return self.reverse_common_words
+        return self.common_words
     
     def is_word(self, word):
         return binary_search(word, self.words)
