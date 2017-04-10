@@ -5,6 +5,7 @@ Created on Mar 14, 2017
 '''
 import re
 from encryptions.dictionary import dictionary
+from collections import deque
 
 class base_class:
     '''
@@ -44,6 +45,10 @@ class base_class:
         """
         This method will be used to insert spaces appropriately to try to make words. It is currently not implemented
         """
+        words=self.ref.get_words(True)
+        letter_queue=deque([], 10)
+        queue_end_index=0
+        queue_begin_index=0
         return message
     
     def decrypt(self, message, *args):
