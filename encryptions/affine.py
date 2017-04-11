@@ -61,5 +61,6 @@ class affine(base_class):
                 encrypt+=i
         return encrypt
 
-ref=dictionary()
-aff=affine(ref)
+if __name__=='__main__':
+    ref=dictionary()
+    aff=affine(ref)

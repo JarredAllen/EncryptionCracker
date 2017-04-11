@@ -5,7 +5,6 @@ Created on Mar 14, 2017
 '''
 import re
 from encryptions.dictionary import dictionary
-from collections import deque
 
 class base_class:
     '''
@@ -27,11 +26,9 @@ class base_class:
     def get_validity(self, message):
         """
         This method returns a floating-point number representing how likely it thinks that this is a valid and meaningful message.
-        The score currently ranges between 0 and 2, but this range is subject to change. 
+        The score currently ranges between -2 and 2, but this range is subject to change. 
         """
         message=message.replace('_', ' ')
-        if not ' ' in message:
-            message=self.insert_spaces(message)
         validWords=0
         totalWords=0
         for word in message.split(' '):
@@ -39,17 +36,7 @@ class base_class:
             validWords+=self.ref.get_score(word)
             #print(word+": "+str(ref.get_score(word)))
         return validWords/totalWords
-        
-        
-    def insert_spaces(self, message):
-        """
-        This method will be used to insert spaces appropriately to try to make words. It is currently not implemented
-        """
-        words=self.ref.get_words(True)
-        letter_queue=deque([], 10)
-        queue_end_index=0
-        queue_begin_index=0
-        return message
+    
     
     def decrypt(self, message, *args):
         """Reverse the encryption of the message using the keys given in *args"""

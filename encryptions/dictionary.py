@@ -8,6 +8,27 @@ The dictionary class, which handles verifying if something is a word, as well as
 
 supported_languages=['english']
 
+list_of_english_words=[]
+def build_list_of_english_words():
+    if list_of_english_words:
+        return list_of_english_words
+    #note: this file just contains a list of all English words
+    with open('words.txt') as f:
+        for line in f:
+            list_of_english_words.append(line.strip())
+    return list_of_english_words
+
+list_of_common_english_words=[]
+def build_list_of_common_english_words():
+    if list_of_common_english_words:
+        return list_of_common_english_words
+    #note: This file contains a list of common English words (top 10K-ish)
+    with open('common_words.txt') as f:
+        for line in f:
+            list_of_common_english_words.append(line.strip())
+    return list_of_common_english_words
+
+
 class dictionary:
     def __init__(self, language='english'):
         """
@@ -16,12 +37,10 @@ class dictionary:
         Has one optional argument for the language that it is to decrypt in. If unspecified or left as None, it defaults to English.
         """
         if language==None or language.lower()=='english':
-            self.words=list_of_english_words
-            self.common_words=list_of_common_english_words
+            self.words=build_list_of_english_words()
+            self.common_words=build_list_of_common_english_words()
         else:
             raise ValueError('Unrecognized or unsupported language')
-        self.reverse_words=words[::-1]
-        self.reverse_common_words=common_words[::-1]
     
     def get_words(self, reverse=False):
         if reverse:
@@ -46,16 +65,6 @@ class dictionary:
         if self.is_word(word):
             return 1.
         return -2
-
-list_of_english_words=[]
-with open('words.txt') as f:
-    for line in f:
-        list_of_english_words.append(line.strip())
-
-list_of_common_english_words=[]
-with open('common_words.txt') as f:
-    for line in f:
-        list_of_common_english_words.append(line.strip())
 
 
 def binary_search(term, sequence):
