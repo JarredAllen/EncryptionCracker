@@ -6,7 +6,7 @@ The dictionary class, which handles verifying if something is a word, as well as
 
 #from encryptions.base_class import base_class
 
-supported_languages=['english']
+supported_languages=['english', 'french']
 
 list_of_english_words=[]
 def build_list_of_english_words():
@@ -28,6 +28,26 @@ def build_list_of_common_english_words():
             list_of_common_english_words.append(line.strip())
     return list_of_common_english_words
 
+list_of_french_words=[]
+def build_list_of_french_words():
+    if list_of_french_words:
+        return list_of_french_words
+    #note: this file just contains a list of all French words
+    with open('french_words.txt') as f:
+        for line in f:
+            list_of_french_words.append(line.strip())
+    return list_of_french_words
+
+list_of_common_french_words=[]
+def build_list_of_common_french_words():
+    if list_of_common_french_words:
+        return list_of_common_french_words
+    #note: This file contains a list of common French words (top 600-ish)
+    with open('common_french_words.txt') as f:
+        for line in f:
+            list_of_common_french_words.append(line.strip())
+    return list_of_common_french_words
+
 
 class dictionary:
     def __init__(self, language='english'):
@@ -36,9 +56,13 @@ class dictionary:
         
         Has one optional argument for the language that it is to decrypt in. If unspecified or left as None, it defaults to English.
         """
-        if language==None or language.lower()=='english':
+        language=language.lower()
+        if language==None or language=='english':
             self.words=build_list_of_english_words()
             self.common_words=build_list_of_common_english_words()
+        elif language=='french':
+            self.words=build_list_of_french_words()
+            self.common_words=build_list_of_common_french_words()
         else:
             raise ValueError('Unrecognized or unsupported language')
     
@@ -84,7 +108,7 @@ def binary_search(term, sequence):
 
 if __name__=='__main__':
     english=dictionary()
-    print(english.get_score('g'))
+    french=dictionary('french')
 
 """
 t=['a', 'b', 'c', 'd', 'f']
