@@ -28,10 +28,10 @@ class base_class:
         This method returns a floating-point number representing how likely it thinks that this is a valid and meaningful message.
         The score currently ranges between -2 and 2, but this range is subject to change. 
         """
-        message=message.replace('_', ' ')
+        message=message.replace('_', ' ').replace("'", ' ')
         validWords=0
         totalWords=0
-        for word in message.split(' '):
+        for word in message.split():
             totalWords+=1
             validWords+=self.ref.get_score(word)
             #print(word+": "+str(ref.get_score(word)))
