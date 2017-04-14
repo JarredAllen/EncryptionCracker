@@ -9,9 +9,9 @@ from random import randrange, choice
 
 class Test(unittest.TestCase):
     
-    def test_affine(self):
+    def test_affine_english(self):
         '''
-        Tests the affine cipher for incorrect
+        Tests the affine cipher for incorrect decryptions of what it encrypted in English
         '''
         generator=generate_phrases()
         cipher=affine.affine(dictionary.dictionary())
@@ -23,7 +23,10 @@ class Test(unittest.TestCase):
             res=cipher.crack(encrypted_text)
             self.assertEqual(message, res[0], message+'decrypted as '+res[0]+' with key '+str(a)+','+str(b)+' on trial #'+str(i+1))\
     
-    def test_caeser(self):
+    def test_caesar_english(self):
+        '''
+        Tests the caesar cipher for incorrect decryptions of what it encrypted in English
+        '''
         generator=generate_phrases()
         cipher=caesar.caesar(dictionary.dictionary())
         for i in range(100):
@@ -36,9 +39,55 @@ class Test(unittest.TestCase):
     
     #Commented out because it does not work
     
-    def test_scytale(self):
+    def test_scytale_english(self):
+        '''
+        Tests the scytale cipher for incorrect decryptions of what it encrypted in English
+        '''
         generator=generate_phrases()
         cipher=scytale.scytale(dictionary.dictionary())
+        for i in range(100):
+            message=generator.__next__()
+            key=randrange(2, 12)
+            encrypted_text=cipher.encrypt(message, key)
+            res=cipher.crack(encrypted_text)
+            self.assertEqual(message, res[0], 'Modes: '+str(key)+' & '+message+' became '+str(res)+'\n'+str(i))
+    
+    def test_affine_french(self):
+        '''
+        Tests the affine cipher for incorrect decryptions of what it encrypted in French
+        '''
+        generator=generate_phrases('french')
+        cipher=affine.affine(dictionary.dictionary('french'))
+        for i in range(100):
+            message=generator.__next__()
+            a=choice(affine.coprime_with_alphabet_length)
+            b=randrange(26)
+            encrypted_text=cipher.encrypt(message, a, b)
+            res=cipher.crack(encrypted_text)
+            self.assertEqual(message, res[0], message+'decrypted as '+res[0]+' with key '+str(a)+','+str(b)+' on trial #'+str(i+1))\
+    
+    def test_caesar_french(self):
+        '''
+        Tests the caesar cipher for incorrect decryptions of what it encrypted in French
+        '''
+        generator=generate_phrases('french')
+        cipher=caesar.caesar(dictionary.dictionary('french'))
+        for i in range(100):
+            message=generator.__next__()
+            key=randrange(26)
+            encrypted_text=cipher.encrypt(message, key)
+            res=cipher.crack(encrypted_text)
+            self.assertEqual(message, res[0], message+'decrypted as '+res[0]+' with key '+str(key)+' on trial #'+str(i+1))
+    
+    
+    #Commented out because it does not work
+    
+    def test_scytale_french(self):
+        '''
+        Tests the scytale cipher for incorrect decryptions of what it encrypted in French
+        '''
+        generator=generate_phrases('french')
+        cipher=scytale.scytale(dictionary.dictionary('french'))
         for i in range(100):
             message=generator.__next__()
             key=randrange(2, 12)
